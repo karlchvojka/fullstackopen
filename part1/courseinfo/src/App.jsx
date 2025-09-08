@@ -1,9 +1,9 @@
 const Content = (props) => {
   return (
     <>
-      <p>{props.part1Title} {props.part1Exer}</p>
-      <p>{props.part2Title} {props.part2Exer}</p>
-      <p>{props.part3Title} {props.part3Exer}</p>
+      <Part partName={props.part1Title} partExer={props.part1Exer} />
+      <Part partName={props.part2Title} partExer={props.part2Exer} />
+      <Part partName={props.part3Title} partExer={props.part3Exer} />
     </>
   )
 }
@@ -11,6 +11,12 @@ const Content = (props) => {
 const Header = (props) => {
   return (
     <h1>{props.title}</h1>
+  )
+}
+
+const Part = (props) => {
+  return (
+    <p>{props.partName} {props.partExer}</p>
   )
 }
 
