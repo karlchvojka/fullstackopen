@@ -6,4 +6,4 @@ The course is a free FullStack Developer course found on the [fullstackopen](htt
 
 ## Time tracking
 
-Part 0: 14 hours
+Part 0: 16 hours
