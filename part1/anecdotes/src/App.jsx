@@ -15,24 +15,32 @@ const App = () => {
   // State Definitions
   const [selected, setSelected] = useState(0)
   const [scores, setScores] = useState(Array(anecdotes.length).fill(0))
+  const [mostVotes, setMost] = useState(0);
 
   // Helper Functions
-
+  // Click Event Handlers
   const handleRandomClick = () => {
     const getRand = Math.floor(Math.random() * (anecdotes.length - 0 + 0)) + 0
     setSelected(getRand)
   };
 
-  const handleRando = () => {
+  // Handles the voting button clicks and updating of state.
+  const handleVote = () => {
     let newScores = [...scores]
     newScores[selected] += 1
+    const mostVal = Math.max(...newScores);
+    const mostVote = { index: newScores.indexOf(mostVal) , val: mostVal}
     setScores(newScores)
+    setMost(mostVote)
   }
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <p>{anecdotes[selected]}<br/> has {scores[selected]} votes</p>
-      <button onClick={handleRando}>vote</button>
+      <button onClick={handleVote}>vote</button>
       <button onClick={handleRandomClick}>Inspire Me!</button>
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[mostVotes.index]}<br/> has {mostVotes.val} votes</p>
     </div>
   )
 }
