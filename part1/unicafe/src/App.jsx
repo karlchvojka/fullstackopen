@@ -1,31 +1,9 @@
 // Framework Imports
 import { useState } from 'react'
 
-// Statistics Components
-const Statistics = ({ good, neutral, bad }) => {
-  // Helper functions
-  const calcAll = good + bad + neutral
-  const calcAvg = (good * 1 + neutral * 0 + bad * (-1))/calcAll
-  const calcPos = parseFloat(good / calcAll) * 100
-
-  if (calcAll === 0) {
-    return (
-      <p>No Feedback given</p>
-    )
-  } else {
-    return (
-      <p>
-        good {good}<br/>
-        neutral {neutral}<br/>
-        bad {bad}<br/>
-        all {calcAll}<br/>
-        average {calcAvg}<br/>
-        positive {calcPos} %
-      </p>
-    )
-  }
-}
-
+// Component Imports
+import Button from './components/elements/Button.jsx'
+import Statistics from './components/features/Statistics.jsx'
 // Main App Component
 const App = () => {
   // save clicks of each button to its own state
@@ -52,9 +30,9 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGoodClick}>good</button>
-      <button onClick={handleNeutClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button text="good" onClick={handleGoodClick} />
+      <Button text="neutral" onClick={handleNeutClick} />
+      <Button text="bad" onClick={handleBadClick} />
       <h2>statistics</h2>
       <Statistics
         good={good}
