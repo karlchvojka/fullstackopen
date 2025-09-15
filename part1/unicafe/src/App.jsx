@@ -7,16 +7,23 @@ const Statistics = ({ good, neutral, bad }) => {
   const calcAll = good + bad + neutral
   const calcAvg = (good * 1 + neutral * 0 + bad * (-1))/calcAll
   const calcPos = parseFloat(good / calcAll) * 100
-  return (
-    <p>
-      good {good}<br/>
-      neutral {neutral}<br/>
-      bad {bad}<br/>
-      all {calcAll}<br/>
-      average {calcAvg}<br/>
-      positive {calcPos} %
-    </p>
-  )
+
+  if (calcAll === 0) {
+    return (
+      <p>No Feedback given</p>
+    )
+  } else {
+    return (
+      <p>
+        good {good}<br/>
+        neutral {neutral}<br/>
+        bad {bad}<br/>
+        all {calcAll}<br/>
+        average {calcAvg}<br/>
+        positive {calcPos} %
+      </p>
+    )
+  }
 }
 
 // Main App Component
