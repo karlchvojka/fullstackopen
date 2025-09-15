@@ -1,10 +1,7 @@
 import { useState } from 'react'
 
 const App = () => {
-  // State Definitions
-  const [selected, setSelected] = useState(0)
-
-  // Data
+    // Data
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -15,6 +12,9 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  // State Definitions
+  const [selected, setSelected] = useState(0)
+  const [scores, setScores] = useState(Array(anecdotes.length).fill(0))
 
   // Helper Functions
 
@@ -22,9 +22,16 @@ const App = () => {
     const getRand = Math.floor(Math.random() * (anecdotes.length - 0 + 0)) + 0
     setSelected(getRand)
   };
+
+  const handleRando = () => {
+    let newScores = [...scores]
+    newScores[selected] += 1
+    setScores(newScores)
+  }
   return (
     <div>
-      {anecdotes[selected]}<br/>
+      <p>{anecdotes[selected]}<br/> has {scores[selected]} votes</p>
+      <button onClick={handleRando}>vote</button>
       <button onClick={handleRandomClick}>Inspire Me!</button>
     </div>
   )
