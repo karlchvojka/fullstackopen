@@ -16,14 +16,16 @@ const Statistics = ({ good, neutral, bad }) => {
     )
   } else {
     return (
-      <div>
-        <StatisticLine text="good" value={good} />
-        <StatisticLine text="neutral" value={neutral} />
-        <StatisticLine text="bad" value={bad} />
-        <StatisticLine text="all" value={calcAll} />
-        <StatisticLine text="average" value={calcAvg} />
-        <StatisticLine text="positive" value={calcPos} />
-      </div>
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={good} />
+          <StatisticLine text="neutral" value={neutral} />
+          <StatisticLine text="bad" value={bad} />
+          <StatisticLine text="all" value={calcAll} />
+          <StatisticLine text="average" value={calcAvg} />
+          <StatisticLine text="positive" value={calcPos} />
+        </tbody>
+      </table>
     );
   }
 };
