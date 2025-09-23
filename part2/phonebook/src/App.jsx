@@ -7,20 +7,32 @@ import Person from './components/Person'
 const App = () => {
   // State Declarations
   const [persons, setPersons] = useState([
-    { name: 'Arto hellas', id: 1 }
+    { name: 'Arto hellas', id: 1 },
+    { name: 'Test this', id: 2}
   ])
 
   const [newName, setNewName] = useState('');
 
   // Helper Functions
+  
+  const cleaned = (str) => { return str.split(' ').join('') };
+
   const addPerson = (event) => {
     event.preventDefault()
     const personObject = {
       name: newName,
       id: String(persons.length + 1)
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
+   
+    const existing = persons.map(person => {return cleaned(person.name)});
+   
+    if(!existing.includes(cleaned(newName))) {
+      const newPersons = persons.concat(personObject)
+      setPersons(newPersons)
+      setNewName('')
+    } else {
+      alert(`${newName} is already added to phonebook`);
+    }
   }
 
   const handlePhoneChange = (event) => {
