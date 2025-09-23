@@ -1,24 +1,5 @@
-const Content = (props) => {
-  return (
-    <>
-      <Part partName={props.parts[0].name} partExer={props.parts[0].exercises} />
-      <Part partName={props.parts[1].name} partExer={props.parts[1].exercises} />
-      <Part partName={props.parts[2].name} partExer={props.parts[1].exercises} />
-    </>
-  )
-}
-
-const Header = (props) => {
-  return (
-    <h1>{props.title}</h1>
-  )
-}
-
-const Part = (props) => {
-  return (
-    <p>{props.partName} {props.partExer}</p>
-  )
-}
+// Component Imports
+import Course from './components/Course'
 
 const Total = (props) => {
   return (
@@ -28,30 +9,28 @@ const Total = (props) => {
 
 const App = () => {
   const course = {
+    id: 1,
     name: 'Half Stack application development',
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
 
-  return (
-    <div>
-      <Header title={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
-    </div>
-  )
+  return <Course course={course} />
 }
 
 export default App
