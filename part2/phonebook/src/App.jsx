@@ -2,7 +2,9 @@
 import { useState } from 'react'
 
 // Component imports
-import Person from './components/Person'
+import Filter from './components/Filter'
+import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   // State Declarations
@@ -13,8 +15,7 @@ const App = () => {
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ]);
   const [filtered, setFiltered] = useState([]);
-  const [newName, setNewName] = useState('');
-  const [newNum, setNewNum] = useState('');
+  const [newValue, setNewValue] = useState({ name: '', number: ''});
   const [searchTerm, setSearchTerm] = useState('');
 
   // Helper Functions
@@ -25,62 +26,40 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     const personObject = {
-      name: newName,
-      number: newNum,
+      name: newValue.name,
+      number: newValue.number,
       id: String(persons.length + 1)
     }
    
     const existingNumb = persons.map(person => {return cleaned(person.number)})
     const existing = [...cleanedNames, ...existingNumb];
    
-    if(!cleanedNames.includes(cleaned(newName)) && !existing.includes(cleaned(newNum))) {
+    if(!cleanedNames.includes(cleaned(newValue.name)) && !existing.includes(cleaned(newValue.number))) {
       const newPersons = persons.concat(personObject)
       setPersons(newPersons)
-      setNewName('')
-      setNewNum('')
     } else {
-      alert(`${newName} is already added to phonebook`);
+      alert(`${newValue.name} is already added to phonebook`);
     }
   }
 
-  const handleNumChange = (event) => {
-    setNewNum(event.target.value)
-  }
-
-  const handlePhoneChange = (event) => {
-    setNewName(event.target.value)
+  const handleValueChange = (event) => {
+    setNewValue({ ...newValue, [event.target.name]: event.target.value })
   }
   
   const handleSearchChange = (event) => {
-    const theTerm = event.target.value.toLowerCase();
+    const theTerm = cleaned(event.target.value.toLowerCase());
     setSearchTerm(theTerm)
-    const newData = persons.filter(person => (person.name.toLowerCase()).includes(cleaned(theTerm)));
+    const newData = persons.filter(person => (cleaned(person.name.toLowerCase()).includes(theTerm)));
     setFiltered(newData);
   }
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>filter shown with<input onChange={handleSearchChange} /></p>
+      <Filter onChange={handleSearchChange} />
       <h2>add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handlePhoneChange} /><br/>
-          number: <input value={newNum} onChange={handleNumChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-
+      <PersonForm onSubmit={addPerson} handleChange={handleValueChange} values={newValue} />
       <h2>Numbers</h2>
-      <div>
-        { searchTerm.length >= 1 ? ( 
-            filtered.map(person => <Person key={person.id} person={person} />)
-          ) : (
-            persons.map(person => <Person key={person.id} person={person} />)
-          )
-        }
-      </div>
+      <Persons filtered={filtered} persons={persons} searchTerm={searchTerm} />
     </div>
   )
 }
