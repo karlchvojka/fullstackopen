@@ -19,7 +19,7 @@ const App = () => {
   const [filtered, setFiltered] = useState([]);
   const [newValue, setNewValue] = useState({ name: '', number: ''});
   const [searchTerm, setSearchTerm] = useState('');
-  const [errorMessage, setErrorMessage] = useState('some error happened...');
+  const [errorMessage, setErrorMessage] = useState({ type:'notification', message: 'some error happened...'});
 
   // On first render
   useEffect(() => {
@@ -54,8 +54,8 @@ const App = () => {
         .then(response => {
           setPersons(persons.concat(response.data))
           setNewValue({ name: '', number: ''})
-          setErrorMessage(`${response.data.name} has been added`);
-          setTimeout(() => { setErrorMessage(null)}, 5000)
+          setErrorMessage({ type: 'success', message: `${response.data.name} has been added`});
+          setTimeout(() => { setErrorMessage({type:'notification', message: null})}, 5000)
         })
     } 
     
@@ -71,11 +71,13 @@ const App = () => {
                 }
                 return person
               })
-              
               setPersons(newData);
               setNewValue({ name: '', number: ''})
               setErrorMessage(`${response.data.name} has been updated`)
-              setTimeout(() => { setErrorMessage(null) }, 5000)
+              setTimeout(() => { setErrorMessage({type:'notification', message: null }) }, 5000)
+            })
+            .catch(error => {
+              setErrorMessage({ type: 'error', message: `${thePerson.name} has already been removed from server`});
             })
         }
     } 
@@ -115,7 +117,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification type={errorMessage.type} message={errorMessage.message} />
       <Filter onChange={handleSearchChange} />
       <h2>add a new</h2>
       <PersonForm onSubmit={addPerson} handleChange={handleValueChange} values={newValue} />
