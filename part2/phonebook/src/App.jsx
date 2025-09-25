@@ -9,6 +9,7 @@ import personService from './services/persons'
 
 // Component imports
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 
@@ -18,6 +19,7 @@ const App = () => {
   const [filtered, setFiltered] = useState([]);
   const [newValue, setNewValue] = useState({ name: '', number: ''});
   const [searchTerm, setSearchTerm] = useState('');
+  const [errorMessage, setErrorMessage] = useState('some error happened...');
 
   // On first render
   useEffect(() => {
@@ -52,6 +54,8 @@ const App = () => {
         .then(response => {
           setPersons(persons.concat(response.data))
           setNewValue({ name: '', number: ''})
+          setErrorMessage(`${response.data.name} has been added`);
+          setTimeout(() => { setErrorMessage(null)}, 5000)
         })
     } 
     
@@ -70,6 +74,8 @@ const App = () => {
               
               setPersons(newData);
               setNewValue({ name: '', number: ''})
+              setErrorMessage(`${response.data.name} has been updated`)
+              setTimeout(() => { setErrorMessage(null) }, 5000)
             })
         }
     } 
@@ -109,6 +115,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter onChange={handleSearchChange} />
       <h2>add a new</h2>
       <PersonForm onSubmit={addPerson} handleChange={handleValueChange} values={newValue} />
