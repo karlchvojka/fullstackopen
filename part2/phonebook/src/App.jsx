@@ -1,8 +1,11 @@
 // Library Imports
 import axios from 'axios'
 
-// Framework imports
+// Framework Imports
 import { useState, useEffect } from 'react'
+
+// Services Imports
+import personService from './services/persons'
 
 // Component imports
 import Filter from './components/Filter'
@@ -18,8 +21,8 @@ const App = () => {
 
   // On first render
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
         setPersons(response.data)
       })
@@ -36,16 +39,17 @@ const App = () => {
       name: newValue.name,
       number: newValue.number,
     }
-   
+  
+    // Check if Number exists in DB
     const numbExists = persons.some((person) => person.number === personObject.number)
     
     // If number does not exist, add entry to DB
     if(!numbExists) {
-        axios
-        .post('http://localhost:3001/persons', personObject)
+      personService
+        .create(personObject)
         .then(response => {
           setPersons(persons.concat(response.data))
-          setNewValue({name: '', number: ''});
+          setNewValue({ name: '', number: ''})
         })
     } else {
       alert(`The Number ${newValue.number} is already added to phonebook`);
