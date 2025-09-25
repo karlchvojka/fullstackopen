@@ -42,18 +42,42 @@ const App = () => {
   
     // Check if Number exists in DB
     const numbExists = persons.some((person) => person.number === personObject.number)
-    
-    // If number does not exist, add entry to DB
-    if(!numbExists) {
+    const nameExists = persons.some((person) => person.name === personObject.name)
+    const thePerson = persons.find((person) => person.name === personObject.name)
+
+    // If number does not exist, and the name does not exist add entry to DB
+    if(!numbExists && !nameExists ) {
       personService
         .create(personObject)
         .then(response => {
           setPersons(persons.concat(response.data))
           setNewValue({ name: '', number: ''})
         })
-    } else {
-      alert(`The Number ${newValue.number} is already added to phonebook`);
-      setNewValue({name: '', number: ''});
+    } 
+    
+    // Else If the Name DOES exist and the number DOES NOT, update the current entry
+    else if(nameExists && !numbExists) {
+        if (window.confirm(`${personObject.name} is already added to the phonebook, replace the old number with the new one?`)) {
+          personService
+            .update(thePerson.id, { ...thePerson, number: personObject.number })
+            .then(response => {
+              const newData = persons.map((person) => {
+                if (person.name === personObject.name) {
+                  return { ...person, number: personObject.number}
+                }
+                return person
+              })
+              
+              setPersons(newData);
+              setNewValue({ name: '', number: ''})
+            })
+        }
+    } 
+
+    // Flagged when The name exists and the number exists (
+    else {
+      alert("Number is already in the phonebook.");
+      setNewValue({ name: '', number: ''})
     }
   }
 
