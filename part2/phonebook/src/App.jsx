@@ -18,34 +18,38 @@ const App = () => {
 
   // On first render
   useEffect(() => {
-    console.log('effect')
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
-        console.log('promise fulfilled')
         setPersons(response.data)
       })
   }, [])
+  
   // Helper Functions
   const cleaned = (str) => { return str.split(' ').join('') };
-  const cleanedNames = persons.map(person => {return cleaned(person.number)})
+  const cleanedNames = persons.map(person => {return cleaned(person.name)})
 
   const addPerson = (event) => {
     event.preventDefault()
+    
     const personObject = {
       name: newValue.name,
       number: newValue.number,
-      id: String(persons.length + 1)
     }
    
-    const existingNumb = persons.map(person => {return cleaned(person.number)})
-    const existing = [...cleanedNames, ...existingNumb];
-   
-    if(!cleanedNames.includes(cleaned(newValue.name)) && !existing.includes(cleaned(newValue.number))) {
-      const newPersons = persons.concat(personObject)
-      setPersons(newPersons)
+    const numbExists = persons.some((person) => person.number === personObject.number)
+    
+    // If number does not exist, add entry to DB
+    if(!numbExists) {
+        axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewValue({name: '', number: ''});
+        })
     } else {
-      alert(`${newValue.name} is already added to phonebook`);
+      alert(`The Number ${newValue.number} is already added to phonebook`);
+      setNewValue({name: '', number: ''});
     }
   }
 
@@ -59,6 +63,7 @@ const App = () => {
     const newData = persons.filter(person => (cleaned(person.name.toLowerCase()).includes(theTerm)));
     setFiltered(newData);
   }
+
   return (
     <div>
       <h2>Phonebook</h2>
