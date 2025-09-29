@@ -1,10 +1,10 @@
 // Component Imports
-import MultiCountries from './MultiCountries.jsx';
-import SingleCountry from './SingleCountry.jsx';
+import MultiCountries from './MultiCountries';
+import SingleCountry from './SingleCountry';
 
 const Content = ({ countries }) => {
   if (countries.length === 1) {
-    return <SingleCountry country={countries[0]} />
+    return <SingleCountry buttonDispl={false} country={countries[0]} displ={true} />
   } else if (countries.length < 10 && countries.length > 1) {
     return <MultiCountries countries={countries} />
   } else if (countries.length > 10) {
