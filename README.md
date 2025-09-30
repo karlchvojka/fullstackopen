@@ -8,4 +8,4 @@ The course is a free FullStack Developer course found on the [fullstackopen](htt
 
 Part 0: 16 hours
 Part 1: 20 hours
-Part 2: 12 hours
+Part 2: 22 hours

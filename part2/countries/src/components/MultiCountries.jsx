@@ -16,6 +16,6 @@ const MultiCountries = ({ countries }) => {
       }
     </div>
   )
-}
+};
 
 export default MultiCountries;

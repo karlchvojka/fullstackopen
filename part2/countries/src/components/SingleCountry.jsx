@@ -1,6 +1,12 @@
 // Framework Imports
 import { useState, useEffect } from 'react';
 
+// Library Imports
+import axios from 'axios';
+
+// Component Imports
+import Weather from './Weather';
+
 const SingleCountry = ({ buttonDispl, country, displ }) => {
   // State Declarations
   const [dispCount, setDispCount] = useState(displ);
@@ -8,15 +14,16 @@ const SingleCountry = ({ buttonDispl, country, displ }) => {
   // Style Declarations
   const labelStyle = {
     display: buttonDispl ? 'block' : 'none'
-  }
+  };
+
   const countryStyle = {
     display: dispCount ? 'block' : 'none'
-  }
+  };
 
   // Event Handlers
   const toggleDisp = () => {
     setDispCount(!dispCount);
-  }
+  };
 
   return (
     <div className="countryWrap">
@@ -38,6 +45,7 @@ const SingleCountry = ({ buttonDispl, country, displ }) => {
         <div className="flag">
           <img alt={country.flag.alt} src={country.flags.png} />
         </div>
+        <Weather city={country.capital[0]} loc={country.capitalInfo.latlng} />
       </div>
     </div>
   )

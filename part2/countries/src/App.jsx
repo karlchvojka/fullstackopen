@@ -1,11 +1,11 @@
 // Framework Imports
 import { useState, useEffect } from 'react';
 
-// Library Imports
-import axios from 'axios';
-
 // Component Imports
 import Content from './components/Content.jsx';
+
+// Services Imports
+import countriesService from './services/countries';
 
 const App = () => {
   // State Delcarations
@@ -14,10 +14,9 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    axios
-      .get(`https://studies.cs.helsinki.fi/restcountries/api/all`)
-      .then(response => {
-        setCountries(response.data);
+    countriesService
+      .getAll().then(initialCountries => {
+        setCountries(initialCountries);
       })
   }, []);
 

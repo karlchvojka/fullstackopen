@@ -12,6 +12,6 @@ const Content = ({ countries }) => {
   } else {
     return <p>Welcome to the Country Search Engine. Enter a country name above.</p>
   }
-}
+};
 
-export default Content
+export default Content;
