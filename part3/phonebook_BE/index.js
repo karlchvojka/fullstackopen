@@ -24,6 +24,8 @@ let persons = [
   }
 ];
 
+// GET REQUESTS
+
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>');
 });
@@ -51,6 +53,15 @@ app.get('/api/persons/:id', (request, response) => {
     response.status(404).end();
   }
 });
+
+// DELETE REQUEST
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  persons = persons.filter(person => person.id !== id);
+
+  response.status(204).end();
+})
 
 const PORT = 3001;
 app.listen(PORT, () => {
