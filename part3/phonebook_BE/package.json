@@ -1,0 +1,17 @@
+{
+  "name": "phonebook_be",
+  "version": "0.0.1",
+  "description": "Phonebook BackEnd",
+  "license": "MIT",
+  "author": "Karl Chvojka",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specifed\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
