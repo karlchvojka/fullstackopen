@@ -34,7 +34,11 @@ let persons = [
 app.use(express.json());
 
 // Morgan config
-app.use(morgan('tiny'));
+
+// Custom req.body token
+morgan.token('post-body', function (req) { return req.method === "POST" ? JSON.stringify(req.body) : " " });
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post-body'));
 
 // HELPER FUNCTIONS
 
