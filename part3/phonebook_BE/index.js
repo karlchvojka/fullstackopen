@@ -1,7 +1,9 @@
+// LIBRARY IMPORTS
 const express = require('express');
-const app = express();
+const morgan = require('morgan');
 
-app.use(express.json());
+// VARIABLE DECLARATIONS
+const app = express();
 
 let persons = [
   {
@@ -25,6 +27,14 @@ let persons = [
     "number": "39-23-6423122"
   }
 ];
+
+// APP.USE DECLARATIONS
+
+// Express JSON Parser
+app.use(express.json());
+
+// Morgan config
+app.use(morgan('tiny'));
 
 // HELPER FUNCTIONS
 
